@@ -30,9 +30,11 @@ if Menu == "Inicio":
     st.expander("imagen")
     st.image("imagen.jpg")
 if Menu == "Informacion de la poblacion estudiada":
-    fig = datos["Race"].value_counts().plot(kind="bar",
-                                      title= "Raza de los pacientes")
-    st.pyplot(fig)
+    df = px.data.tips()
+    value = datos["Tumor Size"]
+    names = datos["Race"]
+    fig = px.pie(df, values=(value), names=(names))
+    st.plotly_chart(fig, use_container_width=True)
     
 if Menu == "Grado de cancer acorde la edad":
 
@@ -73,19 +75,6 @@ if Menu == "Meses de supervivencia vs distintas variables":
         fig.update_layout(xaxis={"title": "Edad"}, legend={"title":"column"})
         st.plotly_chart(fig, use_container_width=True)
 
-    col3, col4 = st.columns(2)
-    with col3:
-        xs = datos["Grade"]
-        ys = datos["Survival Months"]
-        fig = px.scatter(x=(xs), y=(ys)).update_layout(yaxis={"title": "Meses de supervivencia"}, legend={"title":"column"})
-        fig.update_layout(xaxis={"title": "Grado"}, legend={"title":"column"})
-        st.plotly_chart(fig, use_container_width=True)
-    with col4:
-        xs = datos["Race"]
-        ys = datos["Survival Months"]
-        fig = px.scatter(x=(xs), y=(ys)).update_layout(yaxis={"title": "Meses de supervivencia"}, legend={"title":"column"})
-        fig.update_layout(xaxis={"title": "Raza"}, legend={"title":"column"})
-        st.plotly_chart(fig, use_container_width=True)
         
 if Menu == "Edad asociada a la diferenciacion":
     df = px.data.tips()
@@ -107,5 +96,3 @@ Menux = st.sidebar.selectbox("Menux", options = (Graficosx))
 ## pestañas
     #ayuda para mas informacion de como ayudar a a una persona
     # personas que se han recuperado y como evitar caer de nuevo
-
-    
